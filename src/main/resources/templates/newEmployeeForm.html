@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments :: header">
+</head>
+<body>
+    <div class="container">
+        <h1>Employee Management System</h1>
+        <hr>
+        <h2>Save Employee</h2>
+        <form action="#" th:action="@{/saveEmployee}" method="POST" th:object="${employee}">
+            <input type="text" th:classappend="${#fields.hasErrors('firstName') ? 'is-invalid' : ''}" th:field="*{firstName}" class="form-control mb-4 col-4" placeholder="Employee First Name">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+
+            <input type="text" th:classappend="${#fields.hasErrors('lastName') ? 'is-invalid' : ''}" th:field="*{lastName}" class="form-control mb-4 col-4" placeholder="Employee Last Name">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+
+            <input type="text" th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}" th:field="*{email}" class="form-control mb-4 col-4" placeholder="Employee Email">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+
+            <button type="submit" class="btn btn-primary col-2 rounded-0">Add Employee</button>
+        </form>
+        <hr>
+        <a th:href="@{/}">Back to Home Page</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments :: header">
+</head>
+<body>
+    <div class="container my-2">
+        <h1 class="mb-2">Employee List</h1>
+        <a th:href="@{/saveEmployee}" class="btn btn-primary rounded-0 mb-2">Add Employee</a>
+        <table border="1" class="table table-striped table-responsive-md">
+            <thead>
+                <tr>
+                    <th>
+                        <a th:href="@{'/page/'+${currentPage}+'?sortField=id&sortDir='+${reverseDir}}">
+                            No
+                        </a>
+                    </th>
+                    <th>
+                        <a th:href="@{'/page/'+${currentPage}+'?sortField=firstName&sortDir='+${reverseDir}}">
+                            First Name
+                        </a>
+                    </th>
+                    <th>
+                        <a th:href="@{'/page/'+${currentPage}+'?sortField=lastName&sortDir='+${reverseDir}}">
+                            Last Name
+                        </a>
+                    </th>
+                    <th>
+                        <a th:href="@{'/page/'+${currentPage}+'?sortField=email&sortDir='+${reverseDir}}">
+                            Email
+                        </a>
+                    </th>
+                    <th>Control</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="employee,i : ${listEmployee}">
+                    <td th:text="${i.index}+1"></td>
+                    <td th:text="${employee.firstName}"></td>
+                    <td th:text="${employee.lastName}"></td>
+                    <td th:text="${employee.email}"></td>
+                    <td>
+                        <a th:href="@{/showFormForUpdate/{id}(id=${employee.id})}" class="btn btn-primary rounded-0">Update</a>
+                        <a th:href="@{/deleteEmployee/{id}(id=${employee.id})}" class="btn btn-danger rounded-0">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <nav aria-label="..." th:if="${totalPages > 1}">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" th:classappend="${currentPage == 1 ? 'disabled' : ''}" th:href="@{'/page/'+${currentPage - 1}+'?sortField='+${sortField}+'&sortDir='+${sortDir}}">Previous</a>
+                </li>
+                <li class="page-item" th:each="i: ${#numbers.sequence(1,totalPages)}">
+                    <a class="page-link" th:classappend="${currentPage == i ? 'active' : ''}" th:href="@{'/page/'+${i}+'?sortField='+${sortField}+'&sortDir='+${sortDir}}">[[${i}]]</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:classappend="${currentPage == totalPages ? 'disabled' : ''}" th:href="@{'/page/'+${currentPage + 1}+'?sortField='+${sortField}+'&sortDir='+${sortDir}}">Next</a>
+                </li>
+            </ul>
+        </nav>
+<!--        <div th:if="${totalPages > 1}">-->
+<!--            <div class="row col-sm-10">-->
+<!--                <div class="col-sm-2">-->
+<!--                    Total Rows : [[${totalItems}]]-->
+<!--                </div>-->
+<!--                <div class="col-sm-1">-->
+<!--                    <span th:each="i: ${#numbers.sequence(1,totalPages)}">-->
+<!--                        <a th:if="${currentPage != i}" th:href="@{'/page/'+${i}}">[[${i}]]</a>-->
+<!--                        <span th:unless="${currentPage != i}">[[${i}]]</span>   &nbsp; &nbsp;-->
+<!--                    </span>-->
+<!--                </div>-->
+<!--                <div class="col-sm-1">-->
+<!--                    <a th:if="${currentPage < totalPages}" th:href="@{'/page/'+${currentPage + 1}}">Next</a>-->
+<!--                    <span th:unless="${currentPage < totalPages}">Next</span>-->
+<!--                </div>-->
+<!--                <div class="col-sm-1">-->
+<!--                    <a th:if="${currentPage < totalPages}" th:href="@{'/page/'+${totalPages}}">Last</a>-->
+<!--                    <span th:unless="${currentPage < totalPages}">Last</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+</body>
+</html>
